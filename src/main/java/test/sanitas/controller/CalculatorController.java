@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.corp.calculator.TracerImpl;
 import test.sanitas.service.CalculatorService;
 
 /**
@@ -35,7 +36,11 @@ public class CalculatorController {
 	@GetMapping("/suma")
 	public ResponseEntity<BigDecimal> getSuma(@RequestParam(name = "valor1", required = true) BigDecimal valor1,
 			@RequestParam(name = "valor2", required = true) BigDecimal valor2) {
-		return ResponseEntity.ok(calculatorService.suma(valor1, valor2));
+		BigDecimal resultado = calculatorService.suma(valor1, valor2);
+		// la interfaz TracerAPI no se puede utilizar, porque no tiene implementación
+		// utiliamos directamente la clase TracerImpl
+		new TracerImpl().trace(resultado);
+		return ResponseEntity.ok(resultado);
 	}
 
 	/**
@@ -48,6 +53,10 @@ public class CalculatorController {
 	@GetMapping("/resta")
 	public ResponseEntity<BigDecimal> getResta(@RequestParam(name = "valor1", required = true) BigDecimal valor1,
 			@RequestParam(name = "valor2", required = true) BigDecimal valor2) {
-		return ResponseEntity.ok(calculatorService.resta(valor1, valor2));
+		BigDecimal resultado = calculatorService.resta(valor1, valor2);
+		// la interfaz TracerAPI no se puede utilizar, porque no tiene implementación
+		// utiliamos directamente la clase TracerImpl
+		new TracerImpl().trace(resultado);
+		return ResponseEntity.ok(resultado);
 	}
 }
